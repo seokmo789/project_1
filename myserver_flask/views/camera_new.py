@@ -1,3 +1,14 @@
+'''
+FLASK 서버의 Views 부분 입니다.
+
+1. server로부터 전달 받은 img를 Browser에게 전송합니다.
+2. server로부터 전달 받은 img를 OpenCV 및 numpy를 이용하여 빨간색과 초록색을 검출합니다.
+3. 검출된 data를 기존 img에 합쳐서 Browser에게 전송합니다.
+4. 검출된 data를 "get_came.py" 에게 메모리 쉐어드 방식으로 변수들을 공유합니다.
+
+'''
+
+
 from flask import Blueprint, render_template, Response, request, send_file, jsonify
 import cv2
 import numpy as np
