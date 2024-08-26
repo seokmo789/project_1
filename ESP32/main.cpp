@@ -1,3 +1,14 @@
+/*
+자동차 제어 부분 입니다.
+
+1. ESP32 wifi 라이브러리 추가
+2. ESP32 ESPAsyncWebServer 라이브러리 추가
+
+board : ESP32
+IDE : Arduino IDE
+*/
+
+
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 
