@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Camera Stream</title>
+    <style>
+        #video-container {
+            display: flex; /* Flexbox를 사용하여 나란히 배치 */
+            gap: 10px; /* 비디오 스트림 사이에 간격 추가 */
+        }
+        .video-stream {
+            width: 640px;
+            height: 480px;
+        }
+        #capture-button {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #captured-images {
+            display: inline-block;
+            vertical-align: top;
+        }
+        .captured-image {
+            width: 640px;
+            height: 480px;
+            border: 1px solid black;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Camera Stream</h1>
+    <div id="video-container">
+        <img class="video-stream" id="video-stream" src="/camera/stream">
+        <img class="video-stream" id="video-stream2" src="/camera/stream2">
+    </div>
+    <button id="capture-button">Capture</button>
+    <div id="captured-images"></div>
+
+    <script>
+        document.getElementById('capture-button').addEventListener('click', function() {
+            fetch('/camera/capture_image')
+                .then(response => {
+                    if (response.ok) {
+                        return response.blob();
+                    } else {
+                        throw new Error('Failed to capture image');
+                    }
+                })
+                .then(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const capturedImagesContainer = document.getElementById('captured-images');
+                    capturedImagesContainer.innerHTML = ''; // 기존 이미지 지우기
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.className = 'captured-image';
+                    capturedImagesContainer.appendChild(img);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
